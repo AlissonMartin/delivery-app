@@ -116,5 +116,10 @@ export const restaurantSignUp = checkSchema({
         trim: true,
         notEmpty: true,
         errorMessage: 'Endereço inválido'
+    },
+    category: {
+        trim: true,
+        notEmpty:true,
+        errorMessage: 'Adicione uma categoria válida'
     }
 })

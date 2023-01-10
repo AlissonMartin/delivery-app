@@ -7,6 +7,8 @@ import State from "../models/State";
 import bcrypt from 'bcryptjs'
 import Category from "../models/Category";
 import { isObjectIdOrHexString } from "mongoose";
+import sharp from 'sharp'
+import fs from 'fs'
 
 dotenv.config()
 
@@ -42,6 +44,15 @@ export const signUp = async (req: Request, res: Response)=> {
 
     const passwordHash = await bcrypt.hash(data.password, 10)
 
+    // Category
+
+    const cat = await Category.findOne({name: data.category})
+
+    if (!cat) {
+        res.json({error: "Categoria inválida"})
+        return
+    }
+
     // creating new restaurant
 
     const newRest = new Restaurant()
@@ -56,11 +67,12 @@ export const signUp = async (req: Request, res: Response)=> {
         district: data.district,
         city: data.city,
         state: data.state
-    }
+    },
+    newRest.category = data.category
 
     const newRestRes = await newRest.save()
 
-    const token = jwt.sign({restId: newRestRes.id}, process.env.SECRET as string)
+    const token = jwt.sign({userId: newRestRes.id}, process.env.SECRET as string)
 
     res.json({restaurant: "Cadastrado!", token})
 
@@ -158,22 +170,66 @@ export const editAction = async(req:Request, res:Response)=> {
     const data = matchedData(req)
     const userId = req.userId
 
-    // const restaurant = await Restaurant.findById(userId)
+    const restaurant = await Restaurant.findById(userId)
 
-    // if (data.name) {
-    //     restaurant.name = data.name
-    // }
 
-    // if (data.email) {
-    //     const emailValid = await Restaurant.findOne({email: data.email})
+    if (data.name) {
+        restaurant.name = data.name
+    }
 
-    //     if (emailValid) {
-    //         res.json({error: 'Email já existe'})
-    //     }
+    if (data.email) {
+        const emailValid = await Restaurant.findOne({email: data.email})
 
-    //     restaurant.email = data.email
-    // }
+        if (emailValid) {
+            res.json({error: 'Email já existe'})
+            return
+        }
+
+        restaurant.email = data.email
+    }
+
+    if (data.password) {
+        const passwordHash = await bcrypt.hash(data.password, 10)
+        restaurant.password = passwordHash
+    }
+
     const file = req.files as any
+    const photo = file.photo[0]
+    const banner = file.banner[0]
+    
 
-    res.json({})
+    if (photo) {
+        const filename = `${photo.fieldname}-${Math.floor(Math.random() * 9999)}${Date.now()}.jpg`
+        await sharp(photo.buffer).resize(400).toFile(`./public/photos/${filename}`)
+        if (restaurant.photo) {
+            fs.unlink(`./public/photos/${restaurant.photo}`, (err)=> {
+                if (err) {
+                    console.log('It failed')
+                } else {
+                    console.log('Successfully deleted')
+                }
+            })
+        }
+        restaurant.photo = filename
+    }
+
+    if (banner) {
+        const filename = `${banner.fieldname}-${Math.floor(Math.random() * 9999)}${Date.now()}.jpg`
+        await sharp(banner.buffer).resize(1200, 300).toFile(`./public/banners/${filename}`)
+        if (restaurant.banner) {
+            fs.unlink(`./public/photos/${restaurant.banner}`, (err) => {
+                if (err) {
+                    console.log('It failed')
+                } else {
+                    console.log('Successfully deleted')
+                }
+            })
+        }
+        restaurant.banner = filename
+
+    }
+
+    restaurant.save()
+
+    res.json("Dados atualizados")
 }

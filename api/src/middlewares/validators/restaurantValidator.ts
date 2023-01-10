@@ -3,17 +3,20 @@ import { check, checkSchema } from "express-validator";
 export const restaurantEdit = checkSchema({
     name: {
         trim: true,
+        optional: true,
         isLength: {
             options: { min: 2 }
         },
         errorMessage: "O nome precisa de pelo menos 2 caracteres"
     },
     email: {
+        optional: true,
         isEmail: true,
         normalizeEmail: true,
         errorMessage: "Adicione um email válido"
     },
     password: {
+        optional: true,
         isLength: {
             options: { min: 4 }
         },
@@ -23,6 +26,7 @@ export const restaurantEdit = checkSchema({
         errorMessage: 'Digite um CNPJ válido'
     },
     number: {
+        optional: true,
         isInt: true,
         errorMessage: 'Endereço inválido'
     },
