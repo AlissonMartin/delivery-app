@@ -5,6 +5,8 @@ services:
     container_name: delivery-client
     build: ./client
     restart: always
+    environment:
+      - WATCHPACK_POLLING=true
     env_file:
       - .env
     volumes:
