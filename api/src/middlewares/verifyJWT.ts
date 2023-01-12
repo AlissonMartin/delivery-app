@@ -15,7 +15,7 @@ export const verify = (req:any, res:Response, next:NextFunction)=> {
         
         try {
             const decoded = jwt.verify(token[1], process.env.SECRET as string) as customJwtPayload
-            req.userId = decoded.userId
+            req.token = decoded
             next()
         } catch(error) {
             res.json('token inválido')

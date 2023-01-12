@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
+export const HeaderSection = styled.section`
+    background-color: aliceblue;
+    box-shadow: 0 1px 6px rgba(0,0,0,.08);
+`
+
 export const HeaderContainer = styled.header`
     height: 80px;
     padding: 16px 32px;

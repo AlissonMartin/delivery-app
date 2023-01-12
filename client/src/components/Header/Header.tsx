@@ -1,17 +1,19 @@
 import React from 'react'
 import Button from '../Button'
-import { HeaderContainer, NavBar, NavItem } from './HeaderElements'
+import { HeaderContainer, HeaderSection, NavBar, NavItem } from './HeaderElements'
 
 const Header = () => {
   return (
-    <HeaderContainer>
+    <HeaderSection>
+      <HeaderContainer>
         <img src="" alt="" />
         <NavBar>
-            <NavItem>Restaurantes</NavItem>
-            <NavItem>Contato</NavItem>
+          <NavItem>Restaurantes</NavItem>
+          <NavItem>Contato</NavItem>
         </NavBar>
         <Button>Fazer Login</Button>
-    </HeaderContainer>
+      </HeaderContainer>
+    </HeaderSection>
   )
 }
 

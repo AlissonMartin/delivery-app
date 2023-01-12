@@ -8,7 +8,7 @@ function App() {
   const theme = {
     primaryColor: '#FB9400',
     secondaryColor: '',
-    fontColor: '',
+    fontColor: '#4A4A4A',
     offwhite: ''
   }
   

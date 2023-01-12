@@ -72,7 +72,7 @@ export const signUp = async (req: Request, res: Response)=> {
 
     const newRestRes = await newRest.save()
 
-    const token = jwt.sign({userId: newRestRes.id}, process.env.SECRET as string)
+    const token = jwt.sign({restId: newRestRes.id}, process.env.SECRET as string)
 
     res.json({restaurant: "Cadastrado!", token})
 
@@ -105,7 +105,7 @@ export const signIn = async(req:Request, res:Response)=> {
         return
     }
 
-    const token = jwt.sign({ userId: restaurant.id }, process.env.SECRET as string)
+    const token = jwt.sign({ restId: restaurant.id }, process.env.SECRET as string)
 
     res.json({email: restaurant.email, token})
 }
@@ -168,9 +168,9 @@ export const editAction = async(req:Request, res:Response)=> {
     }
 
     const data = matchedData(req)
-    const userId = req.userId
+    const restId = req.token.restId
 
-    const restaurant = await Restaurant.findById(userId)
+    const restaurant = await Restaurant.findById(restId)
 
 
     if (data.name) {

@@ -1,5 +1,9 @@
 declare namespace Express {
     export interface Request {
-        userId: string
+        token: {
+            userId?: string,
+            restId?: string,
+            iat: number
+        }
     }
 }
