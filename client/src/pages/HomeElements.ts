@@ -63,5 +63,37 @@ export const CategoriesWrapper = styled.div`
 `
 
 export const SearchWrapper = styled.div`
+    padding: 80px 40px;
+    margin-left: 80px;
+
+    h3 {
+        font-size: 1.4rem;
+        margin-bottom: 16px;
+    }
+
+    form {
+        display: inline-flex;
+        align-items: center;
+        background-color: white;
+
+        img {
+            height: 22px;
+            margin: 8px;
+            padding: 4px;
+            background-color: #F9F9FB;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #e4e4e4;
+            }
+        }
+
+        input {
+        height: 40px;
+        max-width: 360px;
+        border: none;
+        font-size: 1.2rem;
+    }
+    }
 
 `

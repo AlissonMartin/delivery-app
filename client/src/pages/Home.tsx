@@ -6,6 +6,7 @@ import { CategoriesWrapper, LeftSide, MainWrapper, RectangleItem, RectangleWrapp
 import avatar from '../assets/svg/Vector.svg'
 import shoppingBag from '../assets/svg/Vector-1.svg'
 import location from '../assets/svg/Vector-2.svg'
+import search from '../assets/svg/searchVector.svg'
 import burger from '../assets/images/burger-home.png'
 
 
@@ -41,15 +42,17 @@ const Home = () => {
           </MainWrapper>
         </Container>
       </section>
-      <section style={{ backgroundImage: '#F9F9FB' }}>
+      <section style={{ backgroundColor: '#f9f9fb' }}>
       <Container>
         <CategoriesWrapper>
           
         </CategoriesWrapper>
         <SearchWrapper>
-          <h3></h3>
-          <p></p>
-
+          <h3>Pesquise o seu <br /> restaurante preferido!</h3>
+          <form action="">
+            <img src={search} alt="" />
+            <input type="text" placeholder='Digite o nome do restaurante'/>
+          </form>
         </SearchWrapper>
       </Container>
       </section>

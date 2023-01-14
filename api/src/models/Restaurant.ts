@@ -30,7 +30,8 @@ interface restaurantType {
     },
     category: string,
     photo: string,
-    banner: string
+    banner: string,
+    refreshToken: string
 }
 
 const schema = new Schema<restaurantType>({
@@ -63,7 +64,8 @@ const schema = new Schema<restaurantType>({
     },
     category: {type: String, required: true},
     photo: String,
-    banner: String
+    banner: String,
+    refreshToken: String
 })
 
 const modelName: string = 'Restaurant'

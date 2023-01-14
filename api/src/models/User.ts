@@ -14,7 +14,8 @@ type UserType = {
         city: string,
         state:string
     },
-    photo: string
+    photo: string,
+    refreshToken: string
 }
 
 const schema = new Schema<UserType>({
@@ -31,7 +32,8 @@ const schema = new Schema<UserType>({
         city: {type: String, required: true},
         state: { type: String, required: true },
     },
-    photo: String
+    photo: String,
+    refreshToken: String
 })
 
 const modelName: string = 'User'
