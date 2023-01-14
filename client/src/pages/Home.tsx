@@ -1,7 +1,8 @@
 import Button from '../components/Button'
 import Header from '../components/Header/Header'
 import Container from '../components/Container'
-import { CategoriesWrapper, LeftSide, MainWrapper, RectangleItem, RectangleWrapper, RightSide, SearchWrapper } from './HomeElements'
+import { CategoriesItem, CategoriesWrapper, LeftSide, MainWrapper, RectangleItem, RectangleWrapper, RightSide, SearchWrapper } from './HomeElements'
+import deliveryApi from '../services/deliveryApi/deliveryApi'
 
 import avatar from '../assets/svg/Vector.svg'
 import shoppingBag from '../assets/svg/Vector-1.svg'
@@ -9,8 +10,22 @@ import location from '../assets/svg/Vector-2.svg'
 import search from '../assets/svg/searchVector.svg'
 import burger from '../assets/images/burger-home.png'
 
+import { useState, useEffect } from 'react'
+
 
 const Home = () => {
+  const api = deliveryApi
+
+  const [categoriesList, setCategoriesList] = useState<any[]>([])
+  const [q, setQ] = useState('')
+
+  useEffect(()=> {
+    const getCategories = async()=> {
+      const json = await api.getCategories()
+      setCategoriesList(json.categories)
+    }
+    getCategories()
+  },[])
   return (
     <>
       <Header/>
@@ -45,13 +60,18 @@ const Home = () => {
       <section style={{ backgroundColor: '#f9f9fb' }}>
       <Container>
         <CategoriesWrapper>
-          
+          {categoriesList.map((i,k)=>
+            <CategoriesItem>
+              <img src={i.img} alt="" />
+              <p>{i.name}</p>
+            </CategoriesItem>
+          )}
         </CategoriesWrapper>
         <SearchWrapper>
           <h3>Pesquise o seu <br /> restaurante preferido!</h3>
           <form action="">
-            <img src={search} alt="" />
-            <input type="text" placeholder='Digite o nome do restaurante'/>
+            <img src={search} alt="Busca" />
+            <input type="text" placeholder='Digite o nome do restaurante' value={q} onChange={e=> setQ(e.target.value)}/>
           </form>
         </SearchWrapper>
       </Container>

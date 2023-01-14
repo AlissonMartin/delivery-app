@@ -59,11 +59,30 @@ export const RectangleItem = styled.div`
 `
 
 export const CategoriesWrapper = styled.div`
+    display: flex;
+    padding-top: 32px;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+`
+export const CategoriesItem = styled.div`
+    width: 70px;
 
+    p {
+        font-size: 0.8rem;
+        text-align: center;
+        color: #4A4A4A;
+        font-weight: bold;
+    }
+
+    img {
+        width: 100%;
+    }
 `
 
 export const SearchWrapper = styled.div`
-    padding: 80px 40px;
+    padding: 60px 40px;
     margin-left: 80px;
 
     h3 {
