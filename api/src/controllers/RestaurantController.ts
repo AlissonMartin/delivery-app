@@ -30,7 +30,7 @@ export const listRestaurants = async (req:Request, res:Response)=> {
             id: adsData[i].id,
             name: adsData[i].name,
             adress: adsData[i].adress,
-            photo: adsData[i].photo,
+            photo: `${process.env.BASE_URL}${process.env.API_PORT}/public/photos/${adsData[i].photo}.jpg`,
             category: adsData[i].category
         })
     }

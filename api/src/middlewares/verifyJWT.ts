@@ -25,8 +25,4 @@ export const verify = (req:any, res:Response, next:NextFunction)=> {
         res.json({ error: "Permissão negada" })
     }
 
-
-
-
-
 }

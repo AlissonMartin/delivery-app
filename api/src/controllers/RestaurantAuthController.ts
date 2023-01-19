@@ -53,6 +53,20 @@ export const signUp = async (req: Request, res: Response) => {
         return
     }
 
+    // Photo
+
+    const photo = req.file
+
+    if(!photo) {
+        res.status(400).json('Adicione uma imagem')
+        return
+    }
+
+    const filename = `${photo.fieldname}-${Math.floor(Math.random() * 9999)}${Date.now()}`
+    await sharp(photo.buffer).resize(400).toFile(`./public/photos/${filename}`)
+
+    
+
     // creating new restaurant
 
     const newRest = new Restaurant()
@@ -69,6 +83,7 @@ export const signUp = async (req: Request, res: Response) => {
             state: data.state
         },
         newRest.category = data.category
+        newRest.photo = filename
 
     const newRestRes = await newRest.save()
 
@@ -211,7 +226,7 @@ export const RefreshToken = async (req: Request, res: Response) => {
     }
 
     try {
-        jwt.verify(refreshToken, process.env.REFRESHSECRET as string)
+        jwt.verify(refreshToken, process.env.SECRET as string)
 
         const token = jwt.sign({ restId: validRefreshToken.id }, process.env.SECRET as string)
 
@@ -223,6 +238,15 @@ export const RefreshToken = async (req: Request, res: Response) => {
 
 }
 
-export const Logout = (req:Request, res:Response)=> {
+export const Logout = async (req: Request, res: Response) => {
+    const refreshToken = req.body.refreshToken
 
+    const restaurant = await Restaurant.findOne({ refreshToken: refreshToken })
+
+    if (!restaurant) {
+        res.status(404).json('Token inválido')
+    }
+    restaurant.refreshToken = ""
+    restaurant.save()
+    res.status(200).json('Logout com sucesso')
 }

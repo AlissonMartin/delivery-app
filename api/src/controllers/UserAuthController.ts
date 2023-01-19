@@ -74,7 +74,7 @@ export const signIn = async (req: Request, res: Response) => {
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
-        res.json({ error: errors.mapped() })
+        res.json({ errors: errors.mapped() })
         return
     }
 
@@ -105,10 +105,40 @@ export const signIn = async (req: Request, res: Response) => {
     res.status(200).json({ email: data.email, token, refreshToken })
 }
 
+export const RefreshToken = async (req: Request, res: Response) => {
+    const refreshToken = req.body.refreshToken
+
+    if (!refreshToken) {
+        return res.json('Envie um token')
+    }
+
+    const validRefreshToken = await User.findOne({ refreshToken: refreshToken })
+    if (!validRefreshToken) {
+        return res.json('Token inválido')
+    }
+
+    try {
+        jwt.verify(refreshToken, process.env.SECRET as string)
+
+        const token = jwt.sign({ userId: validRefreshToken.id }, process.env.SECRET as string)
+
+        res.json({ token: token, refreshToken: refreshToken })
+
+    } catch (error) {
+        res.json('Token inválido')
+    }
+
+}
+
 export const Logout = async (req:Request, res:Response)=> {
     const refreshToken = req.body.refreshToken
 
     const user = await User.findOne({refreshToken: refreshToken})
+
+    if(!user) {
+        res.status(404).json('Token inválido')
+    }
     user.refreshToken = ""
     user.save()
+    res.status(200).json('Logout com sucesso')
 }
