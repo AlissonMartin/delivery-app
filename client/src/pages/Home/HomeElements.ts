@@ -116,7 +116,7 @@ export const SearchWrapper = styled.div`
 
         input {
         height: 40px;
-        max-width: 360px;
+        width: 320px;
         border: none;
         font-size: 1.2rem;
     }
@@ -209,7 +209,7 @@ export const CardWrapper = styled.div`
 `
 
 export const Card = styled.div `
-    width: 40%;
+    width: 50%;
     height: 280px;
     background-image: url(${bakeryImg});
     background-size: cover;

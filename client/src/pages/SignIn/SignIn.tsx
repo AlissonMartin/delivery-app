@@ -24,6 +24,13 @@ const SignIn = () => {
     } else if (json.errors.email) {
       setError(json.errors.email.msg)
     } else {
+      if (json.token) {
+        window.sessionStorage.setItem("token", json.token)
+      }
+  
+      if (json.refreshToken) {
+        window.localStorage.setItem("refreshToken", json.refreshToken)
+      }
       window.location.href = '/'
     }
     setDisabled(false)

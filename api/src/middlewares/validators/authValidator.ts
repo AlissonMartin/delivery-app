@@ -28,7 +28,6 @@ export const userSignUp = checkSchema({
         errorMessage: "A senha precisa de ao menos 4 caracteres"
     },
     number: {
-        isInt: true,
         notEmpty: true,
         errorMessage: 'Endereço inválido'
     },

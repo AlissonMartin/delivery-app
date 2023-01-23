@@ -13,7 +13,7 @@ export const signUp = async (req: Request, res: Response) => {
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
-        res.json({ error: errors.mapped() })
+        res.json({ errors: errors.mapped() })
         return
     }
 
@@ -31,15 +31,6 @@ export const signUp = async (req: Request, res: Response) => {
 
     // Password
     const passwordHash = await bcrypt.hash(data.password, 10)
-
-    // State Validation
-
-    const stateValid = await State.find({ state: data.state })
-
-    if (stateValid.length == 0) {
-        res.json({ error: "Adicione um estado válido" })
-        return
-    }
 
     // Creating new User
 

@@ -76,6 +76,27 @@ export const AdressForm = styled.form`
         padding: 6px 8px;
         font-size: 1.2rem;
     }
+
+    select {
+        width: 85%;
+        height: 50px;
+        border-radius: 25px;
+        border: 2px solid black;
+        padding: 6px 8px;
+        font-size: 1.2rem;
+        background-color: white;
+    }
+`
+
+export const NameInputs = styled.div`
+    display: flex;
+    width: 85%;
+    gap: 5%;
+
+
+    input {
+        width: 50%;
+    }
 `
 
 export const Switcher = styled.div`
@@ -100,7 +121,7 @@ export const Switcher = styled.div`
 
     .active {
         background-color: ${theme => theme.theme.primaryColor};
-        box-shadow: 0 0 0 2px #00000020;
+        box-shadow: 0 0 0 1px #00000020;
     }
 
     @media (max-width: 768px) {

@@ -22,6 +22,19 @@ const deliveryApi = {
         })
         const json = await response.json()
         return json
+    },
+    userSignUp: async (params: {firstName: string, lastName: string, email: string, password: string, state:string, city:string, district:string, street:string, number:string})=> {
+        const body = params
+        console.log(body)
+        const response = await fetch(`${apiURL}/user/signup`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+        const json = await response.json()
+        return json
     }
 }
 
