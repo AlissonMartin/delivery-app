@@ -1,4 +1,4 @@
-import Button from '../../components/Button'
+  import Button from '../../components/Button'
 import Header from '../../components/Header/Header'
 import Container from '../../components/Container'
 import Footer from '../../components/Footer/Footer'
@@ -12,6 +12,7 @@ import search from '../../assets/svg/searchVector.svg'
 import burger from '../../assets/images/burger-home.png'
 
 import React, { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 
 const Home = () => {
@@ -20,8 +21,10 @@ const Home = () => {
   const [categoriesList, setCategoriesList] = useState<any[]>([])
   const [restaurantsList, setRestaurantsList] = useState<any[]>([])
   const [q, setQ] = useState('')
+  const navigate = useNavigate()
   
   const carousel = useRef<HTMLDivElement>(null)
+  const searchForm = useRef<HTMLFormElement>(null)
 
   useEffect(()=> {
     const getCategories = async()=> {
@@ -86,7 +89,7 @@ const Home = () => {
       <Container>
         <CategoriesWrapper>
           {categoriesList.map((i,k)=>
-            <CategoriesItem key={k}>
+            <CategoriesItem key={k} onClick={()=> { navigate(`/restaurants?cat=${i.slug}`)}}>
               <img src={i.img} alt="" />
               <p>{i.name}</p>
             </CategoriesItem>
@@ -94,8 +97,8 @@ const Home = () => {
         </CategoriesWrapper>
         <SearchWrapper>
           <h3>Pesquise o seu <br /> restaurante preferido!</h3>
-          <form action="">
-            <img src={search} alt="Busca" />
+          <form action="/restaurants" method='GET' ref={searchForm}>
+            <img src={search} alt="Busca" onClick={()=> { navigate(`/restaurants?q=${q}`) }}/>
             <input type="text" placeholder='Digite o nome do restaurante' value={q} onChange={e=> setQ(e.target.value)}/>
           </form>
         </SearchWrapper>

@@ -7,6 +7,7 @@ import { AdressForm, ErrorMessage, Form, OrangeBackground, SignUpContainer, Sign
 
 import useBrazilianStates from '../../hooks/useBrazilianStates'
 import useCities from '../../hooks/useCities'
+import { doLogin } from '../../utils/authHandler'
 
 const SignUp = () => {
   const api = deliveryApi
@@ -104,13 +105,7 @@ const SignUp = () => {
     }
     setDisabled(false)
     setError('')
-    if (json.token) {
-      window.sessionStorage.setItem("token", json.token)
-    }
-
-    if (json.refreshToken) {
-      window.localStorage.setItem("refreshToken", json.refreshToken)
-    }
+    doLogin(json.token, json.refreshToken)
   }
     // } else if (json.errors.password) {
     //   setError(json.errors.password.msg)

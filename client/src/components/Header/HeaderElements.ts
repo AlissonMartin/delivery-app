@@ -14,6 +14,27 @@ export const HeaderContainer = styled.header`
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid lightgrey;
+    
+    form {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        border-radius: 3px;
+    }
+
+    img {
+        height: 22px;
+            margin: 8px;
+            padding: 4px;
+            background-color: #F9F9FB;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #e4e4e4;
+            }
+    }
 `
 
 export const NavBar = styled.ul`

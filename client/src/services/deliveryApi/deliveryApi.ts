@@ -1,3 +1,4 @@
+import qs from 'qs'
 const apiURL =  `http://localhost:6001`
 
 const deliveryApi = {
@@ -6,8 +7,8 @@ const deliveryApi = {
         const json = response.json()
         return json
     },
-    getRestaurants: async ()=> {
-        const response = await fetch(`${apiURL}/restaurants`)
+    getRestaurants: async (params?:{q: string,cat:string, offset:number, limit:number})=> {
+        const response = await fetch(`${apiURL}/restaurants?${qs.stringify(params)}`)
         const json = response.json()
         return json
     },

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Button from '../../components/Button'
 import deliveryApi from '../../services/deliveryApi/deliveryApi'
+import { doLogin } from '../../utils/authHandler'
 import { ErrorMessage, Form, OrangeBackground, SignInContainer, SignInSection, Switcher } from './SignInElements'
 
 const SignIn = () => {
@@ -24,13 +25,7 @@ const SignIn = () => {
     } else if (json.errors.email) {
       setError(json.errors.email.msg)
     } else {
-      if (json.token) {
-        window.sessionStorage.setItem("token", json.token)
-      }
-  
-      if (json.refreshToken) {
-        window.localStorage.setItem("refreshToken", json.refreshToken)
-      }
+      doLogin(json.token, json.refreshToken)
       window.location.href = '/'
     }
     setDisabled(false)
