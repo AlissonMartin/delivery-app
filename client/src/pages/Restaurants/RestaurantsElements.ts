@@ -25,6 +25,7 @@ export const RestaurantItem = styled.div`
         background-color: ${theme=> theme.theme.primaryColor};
         opacity: 60%;
         color: white;
+        height: 35%;
 
         h2 {
             font-size: 1.2rem;

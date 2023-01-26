@@ -75,6 +75,9 @@ export const restaurantSignUp = checkSchema({
         },
         errorMessage: "O nome precisa de pelo menos 2 caracteres"
     },
+    description: {
+
+    },
     email: {
         isEmail: true,
         normalizeEmail: true,
@@ -83,7 +86,7 @@ export const restaurantSignUp = checkSchema({
     },
     password: {
         isLength: {
-            options: { min: 4 }
+            options: { min: 3 }
         },
         errorMessage: "A senha precisa de ao menos 4 caracteres"
     },

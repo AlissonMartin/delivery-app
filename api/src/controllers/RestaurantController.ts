@@ -8,10 +8,10 @@ dotenv.config()
 
 export const listRestaurants = async (req:Request, res:Response)=> {
     const offset: any = req.query.offset ? req.query.offset : '0'
-    const category = req.query.category
+    const q = req.query.q
+    const category = req.query.cat
     const limit: any = req.query.limit
     const filters: {[k:string]:any} = {}
-
     if (category) {
         const cat = await Category.findOne({name: category})
 
@@ -20,22 +20,30 @@ export const listRestaurants = async (req:Request, res:Response)=> {
         }
     }
 
+    if (q) {
+        filters.name = {$regex: q, $options: 'i'}
+    }
 
-    const adsData = await Restaurant.find(filters).skip(offset ? parseInt(offset) : 0).limit(limit ? parseInt(limit) : 500)
+    console.log(filters)
 
-    let ads = []
+    const restaurantsData = await Restaurant.find(filters).skip(offset ? parseInt(offset) : 0).limit(limit ? parseInt(limit) : 500)
 
-    for (let i in adsData) {
-        ads.push({
-            id: adsData[i].id,
-            name: adsData[i].name,
-            adress: adsData[i].adress,
-            photo: `${process.env.BASE_URL}${process.env.API_PORT}/public/photos/${adsData[i].photo}.jpg`,
-            category: adsData[i].category
+    let restaurants = []
+
+    for (let i in restaurantsData) {
+        restaurants.push({
+            id: restaurantsData[i].id,
+            name: restaurantsData[i].name,
+            adress: restaurantsData[i].adress,
+            photo: `${process.env.BASE_URL}${process.env.API_PORT}/public/photos/${restaurantsData[i].photo}.jpg`,
+            banner: `${process.env.BASE_URL}${process.env.API_PORT}/public/banners/${restaurantsData[i].banner}.jpg`,
+            category: restaurantsData[i].category
         })
     }
 
-    res.json(ads)
+    const TotalRestaurants = await Restaurant.find()
+
+    res.json({restaurants, TotalRestaurants: TotalRestaurants.length})
 
 }
 

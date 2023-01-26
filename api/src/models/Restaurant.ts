@@ -2,6 +2,7 @@ import { connection, model, Schema } from "mongoose"
 
 interface restaurantType {
     name: string,
+    description: string,
     cnpj: string,
     email: string,
     password: string,
@@ -36,6 +37,7 @@ interface restaurantType {
 
 const schema = new Schema<restaurantType>({
     name: {type: String, required: true},
+    description: {type: String, required: true},
     cnpj: {type: String, required: true},
     email: {type: String, required: true},
     password: {type: String, required: true},

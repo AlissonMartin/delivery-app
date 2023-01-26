@@ -31,15 +31,6 @@ export const signUp = async (req: Request, res: Response) => {
         return
     }
 
-    // State validation
-
-    const stateValid = await State.findOne({ state: data.state })
-
-    if (!stateValid) {
-        res.json({ error: "Selecione um estado válido" })
-        return
-    }
-
     // Password
 
     const passwordHash = await bcrypt.hash(data.password, 10)
@@ -53,25 +44,12 @@ export const signUp = async (req: Request, res: Response) => {
         return
     }
 
-    // Photo
-
-    const photo = req.file
-
-    if(!photo) {
-        res.status(400).json('Adicione uma imagem')
-        return
-    }
-
-    const filename = `${photo.fieldname}-${Math.floor(Math.random() * 9999)}${Date.now()}`
-    await sharp(photo.buffer).resize(400).toFile(`./public/photos/${filename}`)
-
-    
-
     // creating new restaurant
 
     const newRest = new Restaurant()
 
-    newRest.name = data.name,
+        newRest.name = data.name,
+        newRest.description = data.description,
         newRest.email = data.email,
         newRest.cnpj = data.cnpj,
         newRest.password = passwordHash,
@@ -83,7 +61,26 @@ export const signUp = async (req: Request, res: Response) => {
             state: data.state
         },
         newRest.category = data.category
-        newRest.photo = filename
+        // Photo
+
+        const file = req.files as any
+        const photo = file.photo[0]
+        const banner = file.banner[0]
+
+        if (photo) {
+            const filename = `${photo.fieldname}-${Math.floor(Math.random() * 9999)}${Date.now()}.jpg`
+            await sharp(photo.buffer).resize(400).toFile(`./public/photos/${filename}`)
+
+            newRest.photo = filename
+        }
+
+        if (banner) {
+            const filename = `${banner.fieldname}-${Math.floor(Math.random() * 9999)}${Date.now()}.jpg`
+            await sharp(banner.buffer).resize(1200, 300).toFile(`./public/banners/${filename}`)
+
+            newRest.banner = filename
+
+        }
 
     const newRestRes = await newRest.save()
 
