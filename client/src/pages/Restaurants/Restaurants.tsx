@@ -5,8 +5,10 @@ import Button from '../../components/Button'
 import { HeaderContainer, HeaderSection } from '../../components/Header/HeaderElements'
 import { isLogged } from '../../utils/authHandler'
 import { RestaurantItem, RestaurantsWrapper, SearchInput } from './RestaurantsElements'
+
 import searchSVG from '../../assets/svg/searchVector.svg'
-import xSVG from '../../assets/svg/xVector.svg'
+import pin from '../../assets/svg/location-pinSVG.svg'
+
 import Container from '../../components/Container'
 import { CategoriesItem, CategoriesWrapper } from '../Home/HomeElements'
 
@@ -32,7 +34,8 @@ const Restaurants = ()=> {
     const getRestaurants = async ()=> {
         const offset = (currentPage - 1) * 10
         const json =  await api.getRestaurants({q,cat, limit: 8, offset})
-        setRestaurantsList(json)
+        setRestaurantsList(json.restaurants)
+        setTotalRestaurants(json.totalRestaurants)
     }
 
     useEffect(()=> {
@@ -107,9 +110,15 @@ const Restaurants = ()=> {
         <section>
             <Container>
                     <RestaurantsWrapper>
-                        <RestaurantItem>
-                            
-                        </RestaurantItem>
+                        { restaurantsList.map((i,k)=> 
+                            <RestaurantItem style={{backgroundImage: i.banner}} key={k}>
+                                <div className='describer'>
+                                    <h2>{i.name}</h2>
+                                    <p>{i.description}</p>
+                                <div> <img src={pin} alt="" /> <p>{i.adress.city}, {i.adress.district}</p></div>
+                                </div>
+                            </RestaurantItem>
+                        )}
                     </RestaurantsWrapper>
             </Container>
         </section>

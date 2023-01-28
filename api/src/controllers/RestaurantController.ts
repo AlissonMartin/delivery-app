@@ -35,8 +35,8 @@ export const listRestaurants = async (req:Request, res:Response)=> {
             id: restaurantsData[i].id,
             name: restaurantsData[i].name,
             adress: restaurantsData[i].adress,
-            photo: `${process.env.BASE_URL}${process.env.API_PORT}/public/photos/${restaurantsData[i].photo}.jpg`,
-            banner: `${process.env.BASE_URL}${process.env.API_PORT}/public/banners/${restaurantsData[i].banner}.jpg`,
+            photo: `${process.env.BASE_URL}${process.env.API_PORT}/public/photos/${restaurantsData[i].photo}`,
+            banner: `${process.env.BASE_URL}${process.env.API_PORT}/public/banners/${restaurantsData[i].banner}`,
             category: restaurantsData[i].category
         })
     }

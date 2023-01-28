@@ -127,6 +127,13 @@ export const SearchWrapper = styled.div`
 export const GalleryWrapper = styled.div`
     overflow-x: auto;
     padding: 60px 20px;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 `
 
 export const Gallery = styled.div`
@@ -136,7 +143,8 @@ export const Gallery = styled.div`
 export const GalleryItem = styled.div`
     display: flex;
     gap: 16px;
-    max-width: 360px;
+    max-width: 300px;
+    height: 100px;
     border: 1px solid lightgrey;
     border-radius: 10px;
     padding: 16px;
@@ -148,11 +156,26 @@ export const GalleryItem = styled.div`
     }
 
     .leftSide {
-        width: 35%;
+        width: 25%;
+
+        img {
+            width: 100%;
+            height: 100%;
+            border-radius: 2px;
+        }
     }
 
     .rightSide {
         flex: 1;
+
+        h3 {
+            font-weight: normal;
+            font-size: 1.4rem;
+            margin-bottom: 4px;
+        }
+
+        p {}
+
     }
 `
 

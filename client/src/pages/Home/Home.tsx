@@ -37,7 +37,7 @@ const Home = () => {
   useEffect(()=> {
     const getRestaurants =async () => {
       const json = await api.getRestaurants()
-      setRestaurantsList(json)
+      setRestaurantsList(json.restaurants)
     }
     getRestaurants()
   }, [])
@@ -45,13 +45,15 @@ const Home = () => {
   const handleLeftClick = (e:React.MouseEvent) => {
     e.preventDefault()
     if (carousel.current) {
+      console.log(carousel.current.offsetWidth)
       carousel.current.scrollLeft -= carousel.current.offsetWidth
     }
   }
 
   const handleRightClick = (e: React.MouseEvent) => {
     if (carousel.current) {
-      carousel.current.scrollLeft += carousel.current.offsetWidth
+      console.log(carousel.current.offsetWidth + carousel.current.scrollLeft)
+      carousel.current.scrollLeft = carousel.current.offsetWidth + carousel.current.scrollLeft
     }
   }
   return (
@@ -108,8 +110,8 @@ const Home = () => {
         <Container style={{position: 'relative'}}>
           <LeftArrow onClick={handleLeftClick}>&lt;</LeftArrow>
           <RightArrow onClick={handleRightClick}>&gt;</RightArrow>
-          <GalleryWrapper>
-            <Gallery ref={carousel}>
+          <GalleryWrapper ref={carousel}>
+            <Gallery>
               {restaurantsList.map((i,k)=>
                 <GalleryItem key={k}>
                   <div className='leftSide'>
