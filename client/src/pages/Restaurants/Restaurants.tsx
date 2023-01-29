@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
 import { HeaderContainer, HeaderSection } from '../../components/Header/HeaderElements'
 import { isLogged } from '../../utils/authHandler'
-import { RestaurantItem, RestaurantsWrapper, SearchInput } from './RestaurantsElements'
+import { Pagination, RestaurantItem, RestaurantsWrapper, SearchInput } from './RestaurantsElements'
 
 import searchSVG from '../../assets/svg/searchVector.svg'
 import pin from '../../assets/svg/location-pinSVG.svg'
@@ -32,8 +32,8 @@ const Restaurants = ()=> {
     const [currentPage, setCurrentPage] = useState(1)
 
     const getRestaurants = async ()=> {
-        const offset = (currentPage - 1) * 10
-        const json =  await api.getRestaurants({q,cat, limit: 8, offset})
+        const offset = (currentPage - 1) * 6
+        const json =  await api.getRestaurants({q,cat, limit: 6, offset})
         setRestaurantsList(json.restaurants)
         setTotalRestaurants(json.totalRestaurants)
     }
@@ -51,6 +51,10 @@ const Restaurants = ()=> {
         getRestaurants()
       },[cat])
 
+    useEffect(()=> {
+        getRestaurants()
+    },[])
+
     useEffect(()=>{
         if (restaurantsList.length > 0) {
             setPageCount(Math.ceil(totalRestaurants / restaurantsList.length))
@@ -59,16 +63,11 @@ const Restaurants = ()=> {
         }
     },[totalRestaurants])
 
-    let pagination = []
+    let pagination: number[] = []
 
     for (let i = 1; i <= pageCount; i++) {
         pagination.push(i)
     }
-
-    useEffect(()=> {
-        getRestaurants()
-    },[])
-
 
     useEffect(()=> {
         const getCategories = async()=> {
@@ -76,8 +75,12 @@ const Restaurants = ()=> {
             setCategoriesList(json.categories)
           }
           getCategories()
-    },[currentPage])
+    },[])
     
+    useEffect(()=> {
+        getRestaurants()
+    },[currentPage])
+
     return (
     <>
         <HeaderSection>
@@ -109,17 +112,36 @@ const Restaurants = ()=> {
         </section>
         <section>
             <Container>
-                    <RestaurantsWrapper>
-                        { restaurantsList.map((i,k)=> 
-                            <RestaurantItem style={{backgroundImage: i.banner}} key={k}>
-                                <div className='describer'>
-                                    <h2>{i.name}</h2>
-                                    <p>{i.description}</p>
-                                <div> <img src={pin} alt="" /> <p>{i.adress.city}, {i.adress.district}</p></div>
-                                </div>
-                            </RestaurantItem>
-                        )}
-                    </RestaurantsWrapper>
+                    {restaurantsList.length > 0 &&
+                        <>
+                            <RestaurantsWrapper>
+                            { restaurantsList.map((i,k)=> 
+                                <RestaurantItem style={{backgroundImage: `url(${i.banner})`}} key={k}>
+                                    <div className='describer'>
+                                        <div className='leftSide'>
+                                            <img src={i.photo} alt="" />
+                                        </div>
+                                        <div className='rightSide'>
+                                            <h2>{i.name}</h2>
+                                            <p>{i.description}</p>
+                                            <div className='adress'> <img src={pin} alt="" /> <p>{i.adress.city}, {i.adress.district}</p></div>
+                                        </div>
+                                    </div>
+                                </RestaurantItem>
+                            )}
+                            </RestaurantsWrapper>
+                            <Pagination>
+                                {pagination.map((i,k)=>
+                                    <div onClick={()=> setCurrentPage(i)} className={i === currentPage ? 'active' : ''} key={k}>{i}</div>
+                                )}
+                            </Pagination>
+                         </>
+                    }
+                    {restaurantsList.length === 0 &&
+                        <RestaurantsWrapper>
+                            <h2>Nenhum Restaurante encontrado</h2>
+                        </RestaurantsWrapper>
+                    }
             </Container>
         </section>
     </>

@@ -10,6 +10,7 @@ export const SearchInput = styled.input`
 `
 
 export const RestaurantsWrapper = styled.div`
+    margin: 48px 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -21,12 +22,24 @@ export const RestaurantItem = styled.div`
     width: 40%;
     height: 360px;
     background-size: cover;
+    background-position: center;
     position: relative;
+    border-radius: 4px;
+    box-shadow: 0 0 3px #00000070;
+    transition: all ease .3s;
+
+    &:hover {
+            cursor: pointer;
+            transform: scale(1.01);
+        }
 
     .describer {
+        display: flex;
+        gap: 16px;
+        align-items: center;
         background-color: ${theme=> theme.theme.primaryColor};
         padding: 24px 16px;
-        opacity: 60%;
+        opacity: 85%;
         color: white;
         height: 35%;
         position: absolute;
@@ -38,18 +51,48 @@ export const RestaurantItem = styled.div`
             margin-bottom: 8px;
         }
 
-        p {
-
-        }
-
-        img {
-            height: 25px;
-        }
-
-        div {
+        .adress {
             display: flex;
             flex-direction: center;
             align-items: center;
+
+            img {
+            height: 25px;
+            margin-right: 8px;
         }
+        }
+
+        .leftSide {
+
+            img {
+                width: 70px;
+                height: 70px;
+                border-radius: 16px;
+            }
+        }
+
+        .rightSide {
+
+        }
+    }
+`
+
+export const Pagination = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    
+    div {
+        font-weight: bold;
+        padding: 4px 10px;
+        border: 2px solid black;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    .active {
+        border: 2px solid ${theme=> theme.theme.primaryColor};  
+        color: ${theme=> theme.theme.primaryColor};
     }
 `

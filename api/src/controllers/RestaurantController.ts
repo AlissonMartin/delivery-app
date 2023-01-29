@@ -13,10 +13,12 @@ export const listRestaurants = async (req:Request, res:Response)=> {
     const limit: any = req.query.limit
     const filters: {[k:string]:any} = {}
     if (category) {
-        const cat = await Category.findOne({name: category})
+        const catItem = await Category.findOne({slug: category})
+        const cat = catItem.name
+        
 
         if (cat) {
-            filters.category = category
+            filters.category = cat
         }
     }
 
@@ -41,9 +43,9 @@ export const listRestaurants = async (req:Request, res:Response)=> {
         })
     }
 
-    const TotalRestaurants = await Restaurant.find()
+    const TotalRestaurants = await Restaurant.find(filters)
 
-    res.json({restaurants, TotalRestaurants: TotalRestaurants.length})
+    res.json({restaurants, totalRestaurants: TotalRestaurants.length})
 
 }
 
