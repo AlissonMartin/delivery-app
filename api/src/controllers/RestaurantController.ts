@@ -59,7 +59,10 @@ export const listRestaurant = async (req:Request, res:Response)=> {
         return
     }
 
-    const restaurantData = await Restaurant.findById(id).select('-cnpj -password')
+    const restaurantData = await Restaurant.findById(id).select('-cnpj -password -refreshToken')
+
+    restaurantData.photo = `${process.env.BASE_URL}${process.env.API_PORT}/public/photos/${restaurantData.photo}`
+    restaurantData.banner = `${process.env.BASE_URL}${process.env.API_PORT}/public/banners/${restaurantData.banner}`
 
     res.json(restaurantData)
 

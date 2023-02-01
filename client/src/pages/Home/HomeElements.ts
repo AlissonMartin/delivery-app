@@ -3,13 +3,17 @@ import bakeryImg from '../../assets/images/bakery.jpg'
 
 export const MainWrapper = styled.div`
     display: flex;
-    margin-top: 48px;
+    margin: 48px 0 24px 16px;
 
     .rightSide {
     display: flex;
 
     .burgerImage {
         width: 380px;
+
+        @media (max-width: 768px) {
+        width: 220px;
+    }
     }
     }
 
@@ -26,6 +30,15 @@ export const MainWrapper = styled.div`
     p {
         color: ${theme => theme.theme.fontColor};
     }
+
+    @media (max-width: 768px) {
+        width: 80%;
+    }
+
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
     }
 `
 
@@ -42,11 +55,11 @@ export const RectangleItem = styled.div`
     gap: 8px;
 
     img {
-        width: 28px;
-        height: 28px;
+        width: 50px;
+        height: 50px;
         border: 3px solid ${theme=> theme.theme.primaryColor};
         border-radius: 6px;
-        padding: 8px;
+        padding: 5px;
     }
 
     p {
@@ -122,6 +135,10 @@ export const SearchWrapper = styled.div`
     }
     }
 
+    @media (max-width: 768px) {
+        margin-left: 16px;
+    }
+
 `
 
 export const GalleryWrapper = styled.div`
@@ -142,9 +159,10 @@ export const Gallery = styled.div`
 `
 export const GalleryItem = styled.div`
     display: flex;
+    align-items: center;
     gap: 16px;
     max-width: 300px;
-    height: 100px;
+    height: 120px;
     border: 1px solid lightgrey;
     border-radius: 10px;
     padding: 16px;
@@ -159,9 +177,10 @@ export const GalleryItem = styled.div`
         width: 25%;
 
         img {
-            width: 100%;
-            height: 100%;
-            border-radius: 2px;
+            width: 60px;
+            height: 60px;
+            border-radius: 4px;
+            box-shadow: 0 0 1px #00000060;
         }
     }
 
@@ -228,11 +247,12 @@ export const CardWrapper = styled.div`
         text-align: center;
         color: ${theme => theme.theme.primaryColor};
         font-size: 1.2rem;
+        margin-top: 24px;
     }
 `
 
 export const Card = styled.div `
-    width: 50%;
+    width: 60%;
     height: 280px;
     background-image: url(${bakeryImg});
     background-size: cover;
@@ -244,5 +264,9 @@ export const Card = styled.div `
     &:hover {
         cursor: pointer;
         transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+        width: 80%;
     }
 `

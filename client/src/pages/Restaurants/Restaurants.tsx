@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from 'react'
-import deliveryApi from '../../services/deliveryApi/deliveryApi'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+
+import deliveryApi from '../../services/deliveryApi/deliveryApi'
 import Button from '../../components/Button'
 import { HeaderContainer, HeaderSection } from '../../components/Header/HeaderElements'
 import { isLogged } from '../../utils/authHandler'
 import { Pagination, RestaurantItem, RestaurantsWrapper, SearchInput } from './RestaurantsElements'
+import Container from '../../components/Container'
+import { CategoriesItem, CategoriesWrapper } from '../Home/HomeElements'
 
 import searchSVG from '../../assets/svg/searchVector.svg'
 import pin from '../../assets/svg/location-pinSVG.svg'
 
-import Container from '../../components/Container'
-import { CategoriesItem, CategoriesWrapper } from '../Home/HomeElements'
 
 const Restaurants = ()=> {
     const api = deliveryApi
@@ -86,8 +87,8 @@ const Restaurants = ()=> {
         <HeaderSection>
             <HeaderContainer>
             <img src="" alt="" />
-            <form>
-                <SearchInput placeholder='Encontre o restaurante que deseja' value={q} onChange={e=> setQ(e.target.value)}></SearchInput>
+            <form method='GET'>
+                <SearchInput name='q' placeholder='Encontre o restaurante que deseja' value={q} onChange={e=> setQ(e.target.value)}></SearchInput>
                 <img src={searchSVG} alt="Pesquisar" onClick={()=> {getRestaurants()}}/>
             </form>
             {logged && 
@@ -116,7 +117,7 @@ const Restaurants = ()=> {
                         <>
                             <RestaurantsWrapper>
                             { restaurantsList.map((i,k)=> 
-                                <RestaurantItem style={{backgroundImage: `url(${i.banner})`}} key={k}>
+                                    <RestaurantItem style={{backgroundImage: `url(${i.banner})`}} key={k} onClick={()=> {navigate(`/restaurant/${i.id}`)}}>
                                     <div className='describer'>
                                         <div className='leftSide'>
                                             <img src={i.photo} alt="" />

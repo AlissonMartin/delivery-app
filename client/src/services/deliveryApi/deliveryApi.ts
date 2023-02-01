@@ -36,6 +36,11 @@ const deliveryApi = {
         })
         const json = await response.json()
         return json
+    },
+    getRestaurant: async (id:string)=> {
+        const response = await fetch(`${apiURL}/restaurant/${id}`)
+        const json = await response.json()
+        return json
     }
 }
 

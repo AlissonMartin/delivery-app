@@ -65,7 +65,7 @@ const Home = () => {
             <div className='leftSide'>
               <h2>O Hamburguer mais delicioso da Sua Cidade</h2>
               <p>É um fato estabelecido há muito tempo que um leitor se distrairá com o conteúdo legível de uma página ao olhar para seu layout.</p>
-              <Button>Fazer Pedido</Button>
+              <Button onClick={()=> {navigate('/restaurants?cat=burger')}}>Fazer Pedido</Button>
             </div>
             <div className='rightSide'>
               <img src={burger} alt="hamburguer" className='burgerImage' />
@@ -101,7 +101,7 @@ const Home = () => {
           <h3>Pesquise o seu <br /> restaurante preferido!</h3>
           <form action="/restaurants" method='GET' ref={searchForm}>
             <img src={search} alt="Busca" onClick={()=> { navigate(`/restaurants?q=${q}`) }}/>
-            <input type="text" placeholder='Digite o nome do restaurante' value={q} onChange={e=> setQ(e.target.value)}/>
+            <input type="text" placeholder='Digite o nome do restaurante' value={q} onChange={e=> setQ(e.target.value)} name='q'/>
           </form>
         </SearchWrapper>
       </Container>

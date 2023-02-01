@@ -15,6 +15,10 @@ export const RestaurantsWrapper = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     gap: 32px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
 `
 
 export const RestaurantItem = styled.div`
@@ -70,10 +74,11 @@ export const RestaurantItem = styled.div`
                 border-radius: 16px;
             }
         }
+    }
 
-        .rightSide {
-
-        }
+    @media (max-width: 768px) {
+        width: 90%;
+        margin: 0 auto;
     }
 `
 

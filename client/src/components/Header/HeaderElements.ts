@@ -49,4 +49,9 @@ export const NavBar = styled.ul`
 export const NavItem = styled.li`
     font-size: 1.3rem;
     cursor: pointer;
+    transition: all ease .2s;
+
+    &:hover {
+        color: ${theme => theme.theme.primaryColor};
+    }
 `
