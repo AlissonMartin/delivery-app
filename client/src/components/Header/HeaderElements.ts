@@ -24,7 +24,7 @@ export const HeaderContainer = styled.header`
         border-radius: 3px;
     }
 
-    img {
+    .search {
         height: 22px;
             margin: 8px;
             padding: 4px;
@@ -54,4 +54,10 @@ export const NavItem = styled.li`
     &:hover {
         color: ${theme => theme.theme.primaryColor};
     }
+`
+
+export const Logo = styled.img`
+    width: 80px;
+    height: 80px;
+    background-color: transparent;
 `

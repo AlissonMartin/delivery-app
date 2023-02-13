@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import Restaurant from "../models/Restaurant";
 import Category from "../models/Category";
 import { isObjectIdOrHexString } from "mongoose";
+import sharp from 'sharp';
 
 dotenv.config()
 
@@ -64,6 +65,64 @@ export const listRestaurant = async (req:Request, res:Response)=> {
     restaurantData.photo = `${process.env.BASE_URL}${process.env.API_PORT}/public/photos/${restaurantData.photo}`
     restaurantData.banner = `${process.env.BASE_URL}${process.env.API_PORT}/public/banners/${restaurantData.banner}`
 
+    for (let i in restaurantData.foods) {
+        restaurantData.foods[i].image = `${process.env.BASE_URL}${process.env.API_PORT}/public/photos/products/${restaurantData.foods[i].image}`
+    }
+
+    for (let i in restaurantData.drinks) {
+        restaurantData.drinks[i].image = `${process.env.BASE_URL}${process.env.API_PORT}/public/photos/products/${restaurantData.drinks[i].image}`
+    }
+
     res.json(restaurantData)
 
+}
+
+export const addFood = async (req:Request, res:Response)=> {
+    const id = req.token.restId
+    const name = req.body.name
+    const price = req.body.price
+    const description = req.body.description
+    const photo = req.file
+    let filename = ''
+
+    if (photo) {
+        filename = `${photo.fieldname}-${Math.floor(Math.random() * 9999)}${Date.now()}.jpg`
+        await sharp(photo.buffer).resize(400).toFile(`./public/photos/products/${filename}`)
+    }
+
+    const restaurant = await Restaurant.findOneAndUpdate({_id: id}, {
+        $push: { foods: {name, price, description, image:filename} }
+    })
+
+    if (!restaurant) {
+        res.status(404).json({error: 'não encontrado'})
+    }
+
+
+    res.status(200).json('Adicionado com sucesso')
+}
+
+export const addDrink = async (req:Request, res:Response)=> {
+    const id = req.token.restId
+    const name = req.body.name
+    const price = req.body.price
+    const description = req.body.description
+    const photo = req.file
+    let filename = ''
+
+    if (photo) {
+        filename = `${photo.fieldname}-${Math.floor(Math.random() * 9999)}${Date.now()}.jpg`
+        await sharp(photo.buffer).resize(400).toFile(`./public/photos/products/${filename}`)
+    }
+
+    const restaurant = await Restaurant.findOneAndUpdate({_id: id}, {
+        $push: { drinks: {name, price, description, image:filename} }
+    })
+
+    if (!restaurant) {
+        res.status(404).json({error: 'não encontrado'})
+    }
+
+
+    res.status(200).json('Adicionado com sucesso')
 }

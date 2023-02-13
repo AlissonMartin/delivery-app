@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import deliveryApi from '../../services/deliveryApi/deliveryApi'
 import Button from '../../components/Button'
-import { HeaderContainer, HeaderSection } from '../../components/Header/HeaderElements'
+import { HeaderContainer, HeaderSection, Logo } from '../../components/Header/HeaderElements'
 import { isLogged } from '../../utils/authHandler'
 import { Pagination, RestaurantItem, RestaurantsWrapper, SearchInput } from './RestaurantsElements'
 import Container from '../../components/Container'
@@ -11,6 +11,7 @@ import { CategoriesItem, CategoriesWrapper } from '../Home/HomeElements'
 
 import searchSVG from '../../assets/svg/searchVector.svg'
 import pin from '../../assets/svg/location-pinSVG.svg'
+import logo from '../../assets/fast.png'
 
 
 const Restaurants = ()=> {
@@ -86,10 +87,10 @@ const Restaurants = ()=> {
     <>
         <HeaderSection>
             <HeaderContainer>
-            <img src="" alt="" />
+            <Link to={'/'}><Logo src={logo} alt="logo" /></Link>
             <form method='GET'>
                 <SearchInput name='q' placeholder='Encontre o restaurante que deseja' value={q} onChange={e=> setQ(e.target.value)}></SearchInput>
-                <img src={searchSVG} alt="Pesquisar" onClick={()=> {getRestaurants()}}/>
+                <img src={searchSVG} alt="Pesquisar" onClick={()=> {getRestaurants()}} className='search'/>
             </form>
             {logged && 
             <Button>Meu perfil</Button>

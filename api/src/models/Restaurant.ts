@@ -13,7 +13,7 @@ interface restaurantType {
         city: string,
         state: string
     },
-    products: {
+
         foods: [{
             productId:any,
             name: string,
@@ -28,7 +28,7 @@ interface restaurantType {
             image: string,
             description: string
         }]
-    },
+,
     category: string,
     photo: string,
     banner: string,
@@ -48,22 +48,20 @@ const schema = new Schema<restaurantType>({
         city: { type: String, required: true },
         state: { type: String, required: true },
     },
-    products: {
-        foods: [{
-            productId: Schema.Types.ObjectId,
-            name: String,
-            price: Number,
-            image: String,
-            description: String
-        }],
-        drinks: [{
-            productId: Schema.Types.ObjectId,
-            name: String,
-            price: Number,
-            image: String,
-            description: String
-        }]
-    },
+    foods: [{
+        productId: Schema.Types.ObjectId,
+        name: String,
+        price: Number,
+        image: String,
+        description: String
+    }],
+    drinks: [{
+        productId: Schema.Types.ObjectId,
+        name: String,
+        price: Number,
+        image: String,
+        description: String
+    }],
     category: {type: String, required: true},
     photo: String,
     banner: String,

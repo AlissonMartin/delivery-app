@@ -33,12 +33,15 @@ router.post('/user/logout', verify, userAuthController.Logout)
 router.post('/restaurant/signup',upload.fields([{ name: 'photo', maxCount: 1 }, { name: 'banner', maxCount: 1 }]), authValidator.restaurantSignUp, restaurantAuthController.signUp)
 router.post('/restaurant/signin', authValidator.signIn, restaurantAuthController.signIn)
 router.put('/restaurant/me', upload.fields([{ name: 'photo', maxCount: 1 }, { name: 'banner', maxCount: 1 }]), restaurantValidator.restaurantEdit, verify, restaurantAuthController.editAction)
+router.post('/restaurant/food', upload.single('photo'), verify, restaurantController.addFood)
+router.post('/restaurant/drink', upload.single('photo'), verify, restaurantController.addDrink)
 
 router.get('/restaurants', restaurantController.listRestaurants)
 router.get('/restaurant/:id', restaurantController.listRestaurant)
 
 router.post('/restaurant/refresh', restaurantAuthController.RefreshToken )
 router.post('/restaurant/logout',verify, restaurantAuthController.Logout)
+
 
 router.get('/categories', CategoriesController.getCategories)
 

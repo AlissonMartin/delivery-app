@@ -3,11 +3,9 @@ import { validationResult, matchedData } from "express-validator";
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import Restaurant from "../models/Restaurant";
-import State from "../models/State";
 import bcrypt from 'bcryptjs'
 import Category from "../models/Category";
 import sharp from 'sharp'
-import fs from 'fs'
 import { generateRestaurantAccessToken, generateRestaurantRefreshToken } from "../utils/jwt";
 
 dotenv.config()
@@ -177,30 +175,12 @@ export const editAction = async (req: Request, res: Response) => {
     if (photo) {
         const filename = `${photo.fieldname}-${Math.floor(Math.random() * 9999)}${Date.now()}.jpg`
         await sharp(photo.buffer).resize(400).toFile(`./public/photos/${filename}`)
-        if (restaurant.photo) {
-            fs.unlink(`./public/photos/${restaurant.photo}`, (err) => {
-                if (err) {
-                    console.log('It failed')
-                } else {
-                    console.log('Successfully deleted')
-                }
-            })
-        }
         restaurant.photo = filename
     }
 
     if (banner) {
         const filename = `${banner.fieldname}-${Math.floor(Math.random() * 9999)}${Date.now()}.jpg`
         await sharp(banner.buffer).resize(1200, 300).toFile(`./public/banners/${filename}`)
-        if (restaurant.banner) {
-            fs.unlink(`./public/photos/${restaurant.banner}`, (err) => {
-                if (err) {
-                    console.log('It failed')
-                } else {
-                    console.log('Successfully deleted')
-                }
-            })
-        }
         restaurant.banner = filename
 
     }
