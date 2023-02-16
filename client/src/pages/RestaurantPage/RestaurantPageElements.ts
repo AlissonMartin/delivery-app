@@ -16,7 +16,7 @@ export const RestaurantInfo = styled.div`
     align-items: center;
     margin: 32px 0;
 
-    img {
+    .photo {
         width: 70px;
         height: 70px;
         border-radius: 50%;
@@ -39,7 +39,7 @@ export const ProductsMenu = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 30%;
+    gap: 15%;
     color: ${theme=> theme.theme.fontColor};
 
     h2 {
@@ -108,13 +108,14 @@ export const Cart = styled.div`
     height: 100vh;
     top: 0;
     bottom: 0;
-    width: 360px;
+    width: 320px;
     background-color: #f4f4f4;
     padding: 36px 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 24px;
+    overflow-y: scroll;
 
     h2 {
         text-align: center;
