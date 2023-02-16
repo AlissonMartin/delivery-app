@@ -14,7 +14,7 @@ export const doLogin = (token:string, refreshToken:string)=> {
     }
   
     if (refreshToken) {
-    window.localStorage.setItem("refreshToken", refreshToken)
+        window.localStorage.setItem("refreshToken", refreshToken)
     }
 }
 
@@ -27,5 +27,13 @@ export const doLogout = ()=> {
     }
     if (refreshToken) {
         window.localStorage.removeItem('refreshToken')
+    }
+}
+
+export const refreshToken = async ()=> {
+    const refreshToken = window.localStorage.getItem('refreshToken')
+
+    if (refreshToken) {
+        const token = await fetch('/')
     }
 }

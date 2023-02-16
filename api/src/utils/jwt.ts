@@ -5,7 +5,7 @@ dotenv.config()
 
 export const generateUserAccessToken = (userId: string)=> {
 
-    const token = jwt.sign({ userId: userId }, process.env.SECRET as string, { expiresIn: '1m' })
+    const token = jwt.sign({ userId: userId }, process.env.SECRET as string, { expiresIn: '5m' })
 
     return token
 }
@@ -19,7 +19,7 @@ export const generateUserRefreshToken = (userId:string)=> {
 
 export const generateRestaurantAccessToken = (restId: string) => {
 
-    const token = jwt.sign({ restId: restId }, process.env.SECRET as string, { expiresIn: '1m' })
+    const token = jwt.sign({ restId: restId }, process.env.SECRET as string, { expiresIn: '5m' })
 
     return token
 }

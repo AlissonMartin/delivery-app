@@ -41,7 +41,20 @@ const deliveryApi = {
         const response = await fetch(`${apiURL}/restaurant/${id}`)
         const json = await response.json()
         return json
-    }
+    },
+    userRefresh: async ()=> {
+        const response = await fetch('http://localhost:6001/user/refresh', {
+          method: 'POST',
+          body: JSON.stringify({
+            refresh: localStorage.getItem('refreshToken')
+          })
+        })
+        const json = await response.json()
+    
+        if (json) {
+          window.sessionStorage.setItem("token", json.token)
+        }
+      }
 }
 
 export default deliveryApi

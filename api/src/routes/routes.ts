@@ -24,7 +24,7 @@ const router = Router()
 // users
 router.post('/user/signup', authValidator.userSignUp, userAuthController.signUp)
 router.post('/user/signin', authValidator.signIn, userAuthController.signIn)
-router.put('/user/me')
+router.get('/user/me', verify, userController.userInfo)
 
 router.post('/user/refresh', userAuthController.RefreshToken)
 router.post('/user/logout', verify, userAuthController.Logout)
