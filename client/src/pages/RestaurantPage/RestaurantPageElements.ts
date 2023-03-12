@@ -131,6 +131,14 @@ export const Cart = styled.div`
         user-select: none;
         cursor: pointer;
     }
+
+    @media (max-width: 768px) {
+        width: 100%;
+        left: 0;
+        top: 15%;
+        height: 85vh;
+        box-shadow: rgba(100, 100, 111, 0.2) 29px 7px 29px 0px;
+    }
 `
 
 export const Item = styled.div<ChildrenProp>`

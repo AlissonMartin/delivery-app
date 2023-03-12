@@ -45,16 +45,36 @@ const deliveryApi = {
     userRefresh: async ()=> {
         const response = await fetch('http://localhost:6001/user/refresh', {
           method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
           body: JSON.stringify({
-            refresh: localStorage.getItem('refreshToken')
+            refreshToken: localStorage.getItem('refreshToken')
           })
         })
         const json = await response.json()
-    
-        if (json) {
-          window.sessionStorage.setItem("token", json.token)
+          
+              if (json) {
+                window.sessionStorage.setItem("token", json.token)
+                
+              }
+        },
+        userInfo: async (token:string)=> {
+            const response = await fetch(`${apiURL}/user/me`, {
+                method: 'GET',
+                headers: new Headers({
+                    'Authorization' : `Bearer ${token}`
+                })
+            })
+            const json = await response.json()
+            return json
+          },
+        userEdit: async (body:FormData)=> {
+            const response = await fetch(`${apiURL}/`, {
+                method: 'PUT',
+                body
+            })
         }
-      }
-}
+    }
 
 export default deliveryApi

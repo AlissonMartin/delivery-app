@@ -4,6 +4,8 @@ import SignIn from '../pages/SignIn/SignIn'
 import SignUp from '../pages/SignUp/SignUp'
 import Restaurants from '../pages/Restaurants/Restaurants'
 import RestaurantPage from '../pages/RestaurantPage/RestaurantPage'
+import PrivateRoutes from '../utils/RouterHandler'
+import UserProfile from '../pages/UserProfile/UserProfile'
 
 const MainRoutes = ()=> {
     return (
@@ -13,6 +15,9 @@ const MainRoutes = ()=> {
             <Route path='/signup' element={<SignUp />}></Route>
             <Route path='/restaurants' element={<Restaurants />}></Route>
             <Route path='/restaurant/:id' element={<RestaurantPage />}></Route>
+            <Route element={<PrivateRoutes/>}>
+                <Route path='/myaccount' element={<UserProfile/>}/>
+            </Route>
         </Routes>
     )
 }
