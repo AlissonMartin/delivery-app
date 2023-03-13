@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Container from '../../components/Container'
 import Header from '../../components/Header/Header'
+import Footer from '../../components/Footer/Footer'
 import { EditDiv, FormWrapper, InputArea, InputsWrapper, LeftSide, PhotoWrapper, RightSide, SubmitButton, UserPhoto } from './UserProfileElements'
 import deliveryApi from '../../services/deliveryApi/deliveryApi'
 import Button from '../../components/Button'
 import useBrazilianStates from '../../hooks/useBrazilianStates'
 import useCities from '../../hooks/useCities'
+import backgroundImg from "../../assets/images/food-background.webp"
 import userIcon from '../../assets/svg/user.svg'
 
 export interface Name {
@@ -66,7 +68,10 @@ const UserProfile = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    const token = window.sessionStorage.getItem('token')
     const fData = new FormData()
+
     if (firstName !== '') {
       fData.append('firstName', firstName)
     }
@@ -101,17 +106,19 @@ const UserProfile = () => {
     }
 
     console.log(fData)
-    // await api.editInfo(fData)
-    // window.location.reload()
+    if (token) {
+      await api.userEdit(fData, token)
+    }
+    window.location.reload()
   }
 
   return (
     <>
       <Header />
-      <section>
-        <Container>
+      <section style={{backgroundImage: `url(${backgroundImg})`, backgroundSize: '125%', backgroundPosition: 'center'}}>
+        <Container style={{backgroundColor: 'white'}}>
           <PhotoWrapper>
-            <UserPhoto style={userInfo?.photo ? { backgroundImage: `url(http://localhost)` } : {backgroundImage: `url(${userIcon})` }}>
+            <UserPhoto style={userInfo?.photo ? { backgroundImage: `url(${userInfo.photo})` } : {backgroundImage: `url(${userIcon})` }}>
               {editMode &&
                 <>
                   <p>+</p>
@@ -129,7 +136,7 @@ const UserProfile = () => {
           </PhotoWrapper>
           <EditDiv><Button onClick={()=> {setEditMode(!editMode); setDisabled(!disabled)}}>Editar Perfil</Button></EditDiv>
         </Container>
-        <Container>
+        <Container style={{backgroundColor: 'white'}}>
           <FormWrapper>
             <LeftSide>
               <form onSubmit={handleSubmit}>
@@ -182,16 +189,16 @@ const UserProfile = () => {
                     </InputArea>
                   </div>
                   <InputArea>
-                    <label htmlFor="">Bairro</label>
-                    <input type="text" value={district} onChange={e => setDistrict(e.target.value)} disabled={disabled} placeholder={userInfo?.adress.district}/>
+                    <label htmlFor="district">Bairro</label>
+                    <input type="text" id='district' value={district} onChange={e => setDistrict(e.target.value)} disabled={disabled} placeholder={userInfo?.adress.district}/>
                   </InputArea>
                   <InputArea>
-                    <label htmlFor="">Rua</label>
-                    <input type="text" value={street} onChange={e => setStreet(e.target.value)} disabled={disabled} placeholder={userInfo?.adress.street}/>
+                    <label htmlFor="street">Rua</label>
+                    <input type="text" id='street' value={street} onChange={e => setStreet(e.target.value)} disabled={disabled} placeholder={userInfo?.adress.street}/>
                   </InputArea>
                   <InputArea>
-                    <label htmlFor="">Número</label>
-                    <input type="number" value={number} onChange={e => setNumber(e.target.value)} disabled={disabled} placeholder={userInfo?.adress.number.toString()}/>
+                    <label htmlFor="number">Número</label>
+                    <input type="number" id='number' value={number} onChange={e => setNumber(e.target.value)} disabled={disabled} placeholder={userInfo?.adress.number.toString()}/>
                   </InputArea>
                 </InputsWrapper>
               </form>
@@ -199,6 +206,7 @@ const UserProfile = () => {
           </FormWrapper>
         </Container>
       </section>
+      <Footer/>
     </>
   )
 }

@@ -37,7 +37,7 @@ const Header = () => {
             <NavItem onClick={() => { navigate('') }}>Contato</NavItem>
           </NavBar>
           {logged &&
-            <HeaderButton>Meu perfil</HeaderButton>
+            <Link to={'/myaccount'}><HeaderButton>Meu perfil</HeaderButton></Link>
           }
           {!logged &&
             <Link to={'/signin'}><HeaderButton>Fazer Login</HeaderButton></Link>

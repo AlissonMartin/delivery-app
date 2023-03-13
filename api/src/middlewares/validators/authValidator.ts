@@ -50,7 +50,7 @@ export const userSignUp = checkSchema({
         trim: true,
         notEmpty:true,
         errorMessage: 'Endereço inválido'
-    }
+    },
 })
 
 export const signIn = checkSchema({

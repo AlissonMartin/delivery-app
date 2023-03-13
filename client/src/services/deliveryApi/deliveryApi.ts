@@ -43,7 +43,7 @@ const deliveryApi = {
         return json
     },
     userRefresh: async ()=> {
-        const response = await fetch('http://localhost:6001/user/refresh', {
+        const response = await fetch(`${apiURL}/user/refresh`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -69,9 +69,12 @@ const deliveryApi = {
             const json = await response.json()
             return json
           },
-        userEdit: async (body:FormData)=> {
-            const response = await fetch(`${apiURL}/`, {
+        userEdit: async (body:FormData, token:string)=> {
+            const response = await fetch(`${apiURL}/user/me`, {
                 method: 'PUT',
+                headers: new Headers({
+                    'Authorization' : `Bearer ${token}`
+                }),
                 body
             })
         }

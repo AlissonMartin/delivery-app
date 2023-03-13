@@ -6,6 +6,7 @@ export const PhotoWrapper = styled.div`
     align-items: center;
     gap: 24px;
     padding: 32px 16px;
+    border-bottom: 1px solid lightgrey;
 `
 
 export const UserPhoto = styled.div`
@@ -15,6 +16,7 @@ export const UserPhoto = styled.div`
     background-color: #d9d9d9;
     background-size: cover;
     position: relative;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
     input {
         display: none;
@@ -42,7 +44,7 @@ export const UserPhoto = styled.div`
 export const FormWrapper = styled.div`
     display: flex;
     width: 100%;
-    padding: 0 16px;
+    padding: 48px 24px;
     gap: 32px;
 `
 

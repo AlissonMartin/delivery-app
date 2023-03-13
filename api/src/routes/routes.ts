@@ -25,6 +25,7 @@ const router = Router()
 router.post('/user/signup', authValidator.userSignUp, userAuthController.signUp)
 router.post('/user/signin', authValidator.signIn, userAuthController.signIn)
 router.get('/user/me', verify, userController.userInfo)
+router.put('/user/me', upload.single('photo'), verify, userController.userEdit)
 
 router.post('/user/refresh', userAuthController.RefreshToken)
 router.post('/user/logout', verify, userAuthController.Logout)
